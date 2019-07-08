@@ -1,4 +1,74 @@
+@font-face {
+    font-family: 'Merriweather';
+    src: url('fonts/Merriweather/Merriweather-LightItalic.ttf');
+    font-weight: lighter;
+}
+
+@font-face {
+    font-family: 'Pacifico';
+    src: url('fonts/Pacifico/Pacifico-Regular.ttf');
+}
+
 * {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #394c6f;
+}
+
+.container {
+    color: #d7dbe2;
+    min-height: 100vh;
+    width: 60%;
+    margin: 0 auto 2rem auto;
+    animation: fadein 0.5s ease-out;
+
+    @media (max-width: 760px) {
+        width: inherit;
+        padding: 0 1rem 0 1.2rem;
+    }
+
+    h1 {
+        font-family: 'Pacifico', serif;
+        margin: 1rem 0;
+        text-align: center;
+
+        a {
+            display: none;
+        }
+    }
+
+    p {
+        font-family: 'Merriweather', serif;
+        font-weight: lighter;
+        line-height: 1.5;
+
+        a {
+            background-color: #1c2637;
+            color: #d7dbe2;
+        }
+
+        @media (max-width: 760px) {
+            font-size: 0.9rem;
+        }
+    }
+}
+
+svg {
+    display: inline-block;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+        padding-top: 2rem;
+    }
+
+    to {
+        opacity: 1;
+        padding-top: 0;
+    }
 }

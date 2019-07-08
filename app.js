@@ -1,19 +1,23 @@
 const express = require('express');
 const nunjucks = require('nunjucks');
+const Posts = require('./models/posts');
 const database = require('./utils/database');
 
 const app = express()
 const port = 3000
 
 nunjucks.configure('views', {
-    autoescape: true,
+    autoescape: false,
     express: app
 });
 
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.render('index.njk');
+    Posts.random()
+        .then(item => {
+            res.render('index.njk', {item: item});
+        });    
 });
 
 app.use('/', (req, res) => {

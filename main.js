@@ -1,5 +1,7 @@
 const main = {
-    test: () => {
+    run: () => {
         return 0;
     }
 };
+
+main.run();
