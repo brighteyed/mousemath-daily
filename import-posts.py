@@ -66,6 +66,13 @@ client['vk-mousemath']['posts'].drop()
 def transform_item(item):
     return Item(item).__dict__
 
+def filter_item(item):
+    if 'attachments' in item:
+        if all([attachment['type'] == 'poll' for attachment in item['attachments']]):
+            return False
+
+    return True
+
 while fetched < count:
     request = f"https://api.vk.com/method/wall.get?count=100&domain=mousemath&filter=owner&access_token={access_token}&v=5.101"
     if fetched > 0:
@@ -77,5 +84,5 @@ while fetched < count:
 
     client['vk-mousemath']['responses'].insert_many(data['response']['items'])
 
-    posts = list(map(transform_item, data['response']['items']))
+    posts = list(map(transform_item, filter(filter_item, data['response']['items'])))
     client['vk-mousemath']['posts'].insert_many(posts)
