@@ -6,6 +6,7 @@ import urllib.request
 
 from datetime import datetime
 
+
 class TextProcessor:
     # https://vk.com/wall-143897455_775; https://vk.com/wall-143897455_925
     URL_PATTERN = re.compile(r'(https?://)([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?')
@@ -33,9 +34,21 @@ class Item:
         self.date = raw_item['date']
         self.id = raw_item['id']
 
+        if 'attachments' in raw_item:
+            self.photos = []
+            for attachment in raw_item['attachments']:
+                photo = {}
+                if attachment['type'] == 'photo':
+                    for size in attachment['photo']['sizes']:
+                        photo[size['type']] = size
+
+                if photo:            
+                    self.photos.append(photo)
+
         self.text = TextProcessor(html.escape(raw_item['text'])) \
-                                        .replace_hyperlinks()    \
-                                        .replace_markup_links().text
+            .replace_hyperlinks().replace_markup_links() \
+            .text
+
 
 with (open('token', 'r')) as file:
     access_token = file.read()
