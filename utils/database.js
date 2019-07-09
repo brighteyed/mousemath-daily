@@ -17,3 +17,5 @@ exports.connect = callback => {
 
 exports.db = () => db;
 
+exports.ObjectId = mongodb.ObjectId;
+

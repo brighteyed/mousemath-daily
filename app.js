@@ -20,6 +20,13 @@ app.get('/', (req, res) => {
         });    
 });
 
+app.get('/attachments/:itemId', (req, res) => {
+    Posts.attachments(req.params.itemId)
+        .then(html => {
+            res.send(html);
+        });    
+});
+
 app.use('/', (req, res) => {
     res.status(404).render('404.njk');
 });
