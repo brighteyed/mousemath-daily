@@ -31,12 +31,12 @@ class Post {
                     let photos = "";
                     item.photos.forEach(photo => {
                         if (photo.y) {
-                            photos += `<img src="${photo.y.url}"/>`;
+                            photos += `<div><img src="${photo.y.url}"/></div>`;
                         } else if (photo.x) {
-                            photos += `<img src="${photo.x.url}"/>`;
+                            photos += `<div><img src="${photo.x.url}"/></div>`;
                         } else if (photo.m) {
-                            photos += `<img src="${photo.m.url}"/>`;
-                        }                    
+                            photos += `<div><img src="${photo.m.url}"/></div>`;
+                        }
                     });
 
                     return `<div class="photos">${photos}</div>`;
