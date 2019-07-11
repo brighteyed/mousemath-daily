@@ -37,7 +37,8 @@ body {
         text-align: center;
 
         a {
-            display: none;
+            text-decoration: none;
+            color: #d7dbe2;
         }
     }
 
@@ -45,6 +46,7 @@ body {
         font-family: 'Merriweather', serif;
         font-weight: lighter;
         line-height: 1.5;
+        margin-bottom: 1rem;
 
         a {
             background-color: #1c2637;
@@ -56,30 +58,19 @@ body {
         }
     }
 
-    .photos {
-        margin-top: 1rem;
-        display: flex;
-        flex-wrap: wrap;
-
-        div {
-            flex-grow: 1;
-            margin: 0.2rem;
-            border: 1px solid #d7dbe2;
-        }        
+    .swiper-slide 
+    {    
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 400px;
     }
 
-    img {
-        min-height: 200px;
-        max-height: 300px;
-        min-width: 100%;
-        max-width: 100%;
-        object-fit: cover;
-        vertical-align: middle;
+    .photos div {
+        @extend .swiper-slide;
+        width: 100%;
     }
-}
 
-svg {
-    display: inline-block;
 }
 
 @keyframes fadein {

@@ -11,19 +11,16 @@ nunjucks.configure('views', {
     express: app
 });
 
+app.use(express.static('node_modules/swiper/dist'));
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
     Posts.random()
         .then(item => {
-            res.render('index.njk', {item: item});
-        });    
-});
-
-app.get('/attachments/:itemId', (req, res) => {
-    Posts.attachments(req.params.itemId)
-        .then(html => {
-            res.send(html);
+            Posts.attachments(item.id)
+                .then(photos => {
+                    res.render('index.njk', {item: item, photos: photos});
+                });    
         });    
 });
 

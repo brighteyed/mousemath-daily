@@ -28,18 +28,50 @@ class Post {
         return db().collection('posts').findOne({_id: new ObjectId(itemId)})
             .then(item => {
                 if (item.photos) {
-                    let photos = "";
+                    if (item.photos.length == 1) {
+                        if (item.photos[0].y) {
+                            return `<div class="photos"><div style="background-image: url(${item.photos[0].y.url});"></div></div>`;
+                        } else if (item.photos[0].x) {
+                            return `<div class="photos"><div style="background-image: url(${item.photos[0].x.url});"></div></div>`;
+                        } else if (item.photos[0].m) {
+                            return `<div class="photos"><div style="background-image: url(${item.photos[0].m.url});"></div></div>`;
+                        }
+                    }
+
+                    let slides = "";
                     item.photos.forEach(photo => {
+
                         if (photo.y) {
-                            photos += `<div><img src="${photo.y.url}"/></div>`;
+                            slides += `<div class="swiper-slide" style="background-image: url(${photo.y.url});"></div>`;
                         } else if (photo.x) {
-                            photos += `<div><img src="${photo.x.url}"/></div>`;
+                            slides += `<div class="swiper-slide" style="background-image: url(${photo.x.url});"></div>`;
                         } else if (photo.m) {
-                            photos += `<div><img src="${photo.m.url}"/></div>`;
+                            slides += `<div class="swiper-slide" style="background-image: url(${photo.m.url});"></div>`;
                         }
                     });
 
-                    return `<div class="photos">${photos}</div>`;
+                    return `<div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    ${slides}                            
+                                </div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+
+                            <script src="js/swiper.min.js"></script>
+
+                            <script>
+                            var mySwiper = new Swiper('.swiper-container', {
+                                pagination: {
+                                    el: '.swiper-pagination',
+                                    clickable: true,
+                                },
+                                spaceBetween: 10,
+                                grabCursor: true,
+                                keyboard: {
+                                    enabled: true,
+                                },
+                            });
+                            </script>`;
                 }
 
                 return "";
