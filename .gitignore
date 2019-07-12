@@ -3,4 +3,4 @@ token
 .vscode/
 node_modules/
 .sass-cache/
-public/
+public/images/
