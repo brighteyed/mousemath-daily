@@ -28,7 +28,7 @@ body {
 
     @media (max-width: 760px) {
         width: inherit;
-        padding: 0 1rem 0 1.2rem;
+        padding: 0 0.8rem 0 1rem;
     }
 
     h1 {
@@ -57,19 +57,19 @@ body {
             font-size: 0.9rem;
         }
     }
+}
 
-    .swiper-slide 
-    {    
-        background-position: center;
-        background-size: contain;
-        background-repeat: no-repeat;
-        height: 400px;
-    }
+.swiper-slide 
+{    
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 400px;
+}
 
-    .photos div {
-        @extend .swiper-slide;
-        width: 100%;
-    }
+.photos div {
+    @extend .swiper-slide;
+    width: 100%;
 }
 
 .fullscreen-view {
