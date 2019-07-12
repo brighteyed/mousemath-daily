@@ -37,6 +37,19 @@ const main = {
                 }
             });
 
+            document.addEventListener('keyup', e => {
+                if (e.key == 'Escape') {
+                    fullscreenView.style.opacity = 0;
+                    setTimeout(() => {
+                        fullscreenView.innerHTML = "";
+                        fullscreenView.style.display = "none";
+                        if (swiper) {
+                            swiper.keyboard.enable();
+                        }
+                    }, 300);
+                }
+            });
+
             if (document.querySelector('.swiper-container')) {
                 swiper = new Swiper('.swiper-container', {
                     grabCursor: true,
