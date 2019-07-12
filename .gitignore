@@ -4,3 +4,7 @@ token
 node_modules/
 .sass-cache/
 public/images/
+public/bundle.js
+public/bundle.js.map
+public/main.css
+public/main.css.map
