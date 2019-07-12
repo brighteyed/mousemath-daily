@@ -29,25 +29,12 @@ class Post {
             .then(item => {
                 if (item.photos) {
                     if (item.photos.length == 1) {
-                        if (item.photos[0].y) {
-                            return `<div class="photos"><div style="background-image: url(${item.photos[0].y.url});"></div></div>`;
-                        } else if (item.photos[0].x) {
-                            return `<div class="photos"><div style="background-image: url(${item.photos[0].x.url});"></div></div>`;
-                        } else if (item.photos[0].m) {
-                            return `<div class="photos"><div style="background-image: url(${item.photos[0].m.url});"></div></div>`;
-                        }
+                        return `<div class="photos"><div style="background-image: url(${item.photos[0].url});"></div></div>`;
                     }
 
                     let slides = "";
                     item.photos.forEach(photo => {
-
-                        if (photo.y) {
-                            slides += `<div class="swiper-slide" style="background-image: url(${photo.y.url});"></div>`;
-                        } else if (photo.x) {
-                            slides += `<div class="swiper-slide" style="background-image: url(${photo.x.url});"></div>`;
-                        } else if (photo.m) {
-                            slides += `<div class="swiper-slide" style="background-image: url(${photo.m.url});"></div>`;
-                        }
+                        slides += `<div class="swiper-slide" style="background-image: url(${photo.url});"></div>`;
                     });
 
                     return `<div class="swiper-container">

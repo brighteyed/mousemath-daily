@@ -1,7 +1,9 @@
 import html
 import json
+import os
 import pymongo
 import re
+import ssl
 import urllib.request
 
 from datetime import datetime
@@ -37,13 +39,27 @@ class Item:
         if 'attachments' in raw_item:
             self.photos = []
             for attachment in raw_item['attachments']:
-                photo = {}
                 if attachment['type'] == 'photo':
+                    photo = {}
                     for size in attachment['photo']['sizes']:
                         photo[size['type']] = size
 
-                if photo:            
-                    self.photos.append(photo)
+                    max_photo_size = next(s for s in ['w', 'z', 'y', 'x', 'm'] if s in photo.keys())
+                    max_photo = photo[max_photo_size]
+
+                    url = max_photo['url']
+                    img = f"public/images/{'_'.join(url.split('/')[2:])}"
+
+                    if not os.path.exists(img):
+                        gcontext = ssl.SSLContext()        
+                        link = urllib.request.urlopen(url, context=gcontext)
+                        print(f'[{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}] ==> {url}')
+                        with open(img, 'wb') as image_file:
+                            image_file.write(link.read())
+                            print(f'[{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}] <== {url}')
+
+                    max_photo['url'] = '/'.join(img.split('/')[1:])
+                    self.photos.append(max_photo)
 
         self.text = TextProcessor(html.escape(raw_item['text'])) \
             .replace_hyperlinks().replace_markup_links() \
