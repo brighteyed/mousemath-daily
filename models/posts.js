@@ -42,23 +42,7 @@ class Post {
                                     ${slides}                            
                                 </div>
                                 <div class="swiper-pagination"></div>
-                            </div>
-
-                            <script src="js/swiper.min.js"></script>
-
-                            <script>
-                            var mySwiper = new Swiper('.swiper-container', {
-                                pagination: {
-                                    el: '.swiper-pagination',
-                                    clickable: true,
-                                },
-                                spaceBetween: 10,
-                                grabCursor: true,
-                                keyboard: {
-                                    enabled: true,
-                                },
-                            });
-                            </script>`;
+                            </div>`;
                 }
 
                 return "";

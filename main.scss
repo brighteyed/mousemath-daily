@@ -70,7 +70,61 @@ body {
         @extend .swiper-slide;
         width: 100%;
     }
+}
 
+.fullscreen-view {
+    background-color: #000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    display: none;
+    z-index: 10;
+    transition: opacity 0.3s;
+
+    .swiper-fullscreen {
+        height: 100%;
+
+        .swiper-slide 
+        {    
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }        
+    }
+
+    div {
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 100%;
+    }
+}
+
+.close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0.5rem;
+    padding: 0.3rem;
+
+    background-color: #000;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    z-index: 15;
+
+    @media (max-width: 760px) {
+        left: 0;
+    }
+}
+
+svg {
+    display: block;
 }
 
 @keyframes fadein {
