@@ -1,0 +1,10 @@
+{
+    "network": {
+        "proxy_url": ""
+    },
+
+    "auth": {
+        "bot_token": "",
+        "vk_token": ""
+    }
+}
