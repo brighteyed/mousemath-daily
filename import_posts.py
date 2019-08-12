@@ -68,6 +68,8 @@ class Item:
             .text
 
 
+client = pymongo.MongoClient('mongodb://localhost:27017/')
+
 with open('options.json') as options_file:
     options = json.load(options_file)
 
@@ -79,20 +81,6 @@ data = json.loads(response.decode('utf-8'))
 count = int(data['response']['count'])
 fetched = 0
 
-client = pymongo.MongoClient('mongodb://localhost:27017/')
-client['vk-mousemath']['responses'].drop()
-client['vk-mousemath']['posts'].drop()
-
-def transform_item(item):
-    return Item(item).__dict__
-
-def filter_item(item):
-    if 'attachments' in item:
-        if all([attachment['type'] == 'poll' for attachment in item['attachments']]):
-            return False
-
-    return True
-
 while fetched < count:
     request = f"https://api.vk.com/method/wall.get?count=100&domain=mousemath&filter=owner&access_token={vk_token}&v=5.101"
     if fetched > 0:
@@ -102,7 +90,10 @@ while fetched < count:
     data = json.loads(response.decode('utf-8'))
     fetched += len(data['response']['items'])
 
-    client['vk-mousemath']['responses'].insert_many(data['response']['items'])
+    for item in data['response']['items']:
+        if 'attachments' in item:
+            if all([attachment['type'] == 'poll' for attachment in item['attachments']]):
+                continue
 
-    posts = list(map(transform_item, filter(filter_item, data['response']['items'])))
-    client['vk-mousemath']['posts'].insert_many(posts)
+        if not client['vk-mousemath']['posts'].find_one({ 'id': { '$eq': item['id'] } }):
+            client['vk-mousemath']['posts'].insert_one(Item(item).__dict__)
