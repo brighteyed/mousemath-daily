@@ -9,10 +9,11 @@ from telegram.ext import CommandHandler
 
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                     level=logging.WARNING)
+                    level=logging.WARNING)
+
 
 def random(bot, update):
-    random_post = next(posts_collection.aggregate([{ "$sample": { "size": 1}}]))
+    random_post = next(posts_collection.aggregate([{"$sample": {"size": 1}}]))
 
     bot.send_message(chat_id=update.message.chat_id,
                      text=f"<a href='{random_post['url']}'>[{datetime.utcfromtimestamp(int(random_post['date'])).strftime('%d %b %Y')}]</a> {random_post['text']}",
@@ -23,8 +24,8 @@ def random(bot, update):
         photos = [telegram.InputMediaPhoto(media=open(f"public/{photo['url']}", "rb")) for photo in random_post['photos']]
         if len(photos) > 0:
             bot.send_media_group(chat_id=update.message.chat_id,
-                                media=photos[:10], 
-                                disable_notification=True)
+                                 media=photos[:10],
+                                 disable_notification=True)
 
 
 with open('options.json') as options_file:

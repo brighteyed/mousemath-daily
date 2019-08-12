@@ -53,7 +53,7 @@ class Item:
                     img = f"public/images/{'_'.join(url.split('/')[3:])}"
 
                     if not os.path.exists(img):
-                        gcontext = ssl.SSLContext()        
+                        gcontext = ssl.SSLContext()
                         link = urllib.request.urlopen(url, context=gcontext)
                         print(f'[{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}] ==> {url}')
                         with open(img, 'wb') as image_file:
@@ -95,5 +95,5 @@ while fetched < count:
             if all([attachment['type'] == 'poll' for attachment in item['attachments']]):
                 continue
 
-        if not client['vk-mousemath']['posts'].find_one({ 'id': { '$eq': item['id'] } }):
+        if not client['vk-mousemath']['posts'].find_one({'id': {'$eq': item['id']}}):
             client['vk-mousemath']['posts'].insert_one(Item(item).__dict__)
