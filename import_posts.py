@@ -21,12 +21,14 @@ class TextProcessor:
 
     def replace_hyperlinks(self):
         """Detect hyperlinks"""
-        self.text = TextProcessor.URL_PATTERN.sub(r'<a href="\g<1>\g<2>\g<3>">\g<2>\g<3></a>', self.text)
+        self.text = TextProcessor.URL_PATTERN.sub(r'<a href="\g<1>\g<2>\g<3>">\g<2>\g<3></a>',
+                                                  self.text)
         return self
 
     def replace_markup_links(self):
         """Detect internal (?) links in markup format"""
-        self.text = TextProcessor.MARKUP_LINK_PATTERN.sub(r'<a href="https://vk.com/\g<1>">\g<2></a>', self.text)
+        self.text = TextProcessor.MARKUP_LINK_PATTERN.sub(r'<a href="https://vk.com/\g<1>">\g<2></a>',
+                                                          self.text)
         return self
 
 
@@ -48,7 +50,7 @@ class Item:
                     max_photo = photo[max_photo_size]
 
                     url = max_photo['url']
-                    img = f"public/images/{'_'.join(url.split('/')[2:])}"
+                    img = f"public/images/{'_'.join(url.split('/')[3:])}"
 
                     if not os.path.exists(img):
                         gcontext = ssl.SSLContext()        
@@ -66,10 +68,12 @@ class Item:
             .text
 
 
-with (open('token', 'r')) as file:
-    access_token = file.read()
+with open('options.json') as options_file:
+    options = json.load(options_file)
 
-response = urllib.request.urlopen(f"https://api.vk.com/method/wall.get?count=1&domain=mousemath&filter=owner&access_token={access_token}&v=5.101").read()
+vk_token = options['auth']['vk_token']
+
+response = urllib.request.urlopen(f"https://api.vk.com/method/wall.get?count=1&domain=mousemath&filter=owner&access_token={vk_token}&v=5.101").read()
 data = json.loads(response.decode('utf-8'))
 
 count = int(data['response']['count'])
@@ -90,7 +94,7 @@ def filter_item(item):
     return True
 
 while fetched < count:
-    request = f"https://api.vk.com/method/wall.get?count=100&domain=mousemath&filter=owner&access_token={access_token}&v=5.101"
+    request = f"https://api.vk.com/method/wall.get?count=100&domain=mousemath&filter=owner&access_token={vk_token}&v=5.101"
     if fetched > 0:
         request += f"&offset={fetched}"
 

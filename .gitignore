@@ -1,5 +1,4 @@
 venv/
-token
 .vscode/
 node_modules/
 .sass-cache/
@@ -8,3 +7,4 @@ public/bundle.js
 public/bundle.js.map
 public/main.css
 public/main.css.map
+options.json
